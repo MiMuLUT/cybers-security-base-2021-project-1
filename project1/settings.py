@@ -70,6 +70,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project1.wsgi.application'
 
+LOGIN_URL = '/polls/login'
+LOGIN_REDIRECT_URL = '/polls'
+SESSION_COOKIE_SAMESITE = None
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

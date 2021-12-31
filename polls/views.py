@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -19,7 +19,6 @@ class IndexView(generic.ListView):
         return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
-
 
 class DetailView(generic.DetailView):
     model = Question
@@ -58,3 +57,10 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def addQuestion(request):
+    if request.method == "POST":
+        if request.user.is_authenticated and request.POST.get("question_text"):
+            Question(question_text=request.POST.get("question_text"),
+                    pub_date=timezone.now()).save()
+    return redirect('/polls')

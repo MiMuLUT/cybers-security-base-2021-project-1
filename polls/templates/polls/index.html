@@ -5,11 +5,38 @@
         <title>Polls</title>
     </head>
     <body>
+        {% if user.is_authenticated %}
+        <table>
+            <tr>
+            <th style="text-align:left">Username: <td>{{user.username}} 
+            </table>
+        <form action="logout/" method="POST">
+            {% csrf_token %}
+                <input type="submit" value="Logout" />
+        </form>
+
+        <form action="add/" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend><h2>New question</h2></legend>
+                <input type="text" name="question_text" /><br />
+                <input type="submit" value="Add" />
+            </fieldset>
+        </form>
+        {% else %}
+        <form action="login/" method="GET">
+            {% csrf_token %}
+            <input type="submit" value="Login" />
+        </form>
+        {% endif %}
+
         {% if latest_question_list %}
         <ul>
+            {% autoescape off %}
             {% for question in latest_question_list %}
             <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
             {% endfor %}
+            {% endautoescape %}
         </ul>
         {% else %}
         <p>No polls are available.</p>

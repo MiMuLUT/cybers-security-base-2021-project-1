@@ -74,6 +74,10 @@ LOGIN_URL = '/polls/login'
 LOGIN_REDIRECT_URL = '/polls'
 SESSION_COOKIE_SAMESITE = None
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher'
+]
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
